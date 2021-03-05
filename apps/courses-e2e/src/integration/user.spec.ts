@@ -2,7 +2,6 @@
 import {
   getButton,
   getInput,
-  getLink,
   getHeading,
   withBaseUrl,
 } from '../support/app.po';
@@ -108,7 +107,6 @@ describe('user not logged in', () => {
 describe('user logged in', () => {
   before(() => {
     cy.visit('/');
-    cy.acceptCookies();
     cy.createUser(ADA_LOVELACE);
     cy.saveLocalStorageCache();
   });
@@ -122,28 +120,36 @@ describe('user logged in', () => {
     cy.saveLocalStorageCache();
   });
 
+  after(() => {
+    cy.deleteAccount();
+  });
+
   it('should be able to start a course', () => {
     // First 'Start Course' button
     cy.visit(`courses/${COURSE_SLUG}`);
-    cy.contains('a.chakra-button', 'Start Course', { timeout: 20000 }).first().click();
+    cy.contains('a.chakra-button', 'Start Course', { timeout: 20000 })
+      .first()
+      .click();
     cy.url().should('not.eq', withBaseUrl());
 
     // Second 'Start Course' button
     cy.visit(`courses/${COURSE_SLUG}`);
-    cy.contains('a.chakra-button', 'Start Course', { timeout: 20000 }).last().click();
+    cy.contains('a.chakra-button', 'Start Course', { timeout: 20000 })
+      .last()
+      .click();
     cy.url().should('not.eq', withBaseUrl());
   });
 
   it('signin page should not be available', () => {
     cy.visit('/signin');
-    cy.url().should('not.eq', withBaseUrl(' signin'));
-    cy.url().should('eq', withBaseUrl());
+    cy.url().should('not.eq', withBaseUrl('signin'));
+    cy.url().should('eq', withBaseUrl('users/dashboard'));
   });
 
   it('signup page should not be available', () => {
     cy.visit('/signup');
     cy.url().should('not.eq', withBaseUrl('/signup'));
-    cy.url().should('eq', withBaseUrl());
+    cy.url().should('eq', withBaseUrl('users/dashboard'));
   });
 
   it('/users route should be unavailable', () => {
@@ -153,8 +159,9 @@ describe('user logged in', () => {
   });
 
   it('profile page should be available', () => {
-    // cy.visit(`users/${TEST_USER.uid}`);
-    // cy.url().should('eq', `users/${TEST_USER.uid}`);
+    const currentUser = getCurrentUser();
+    cy.visit(`users/${currentUser.uid}`);
+    cy.url().should('eq', withBaseUrl(`users/${currentUser.uid}`));
     cy.url().should('not.eq', withBaseUrl());
   });
 
@@ -168,7 +175,6 @@ describe('user logged in', () => {
 describe('user authentication', () => {
   before(() => {
     cy.visit('/');
-    cy.acceptCookies();
     cy.saveLocalStorageCache();
   });
 
@@ -182,6 +188,7 @@ describe('user authentication', () => {
 
   it('creates a new user', () => {
     cy.createUser(ADA_LOVELACE);
+    cy.checkAlert(ALERT_MSG.SIGNUP_SUCCESS);
   });
 
   it('log out from the website', () => {
@@ -200,13 +207,10 @@ describe('user authentication', () => {
 
   it('delete the logged user account', () => {
     cy.deleteAccount();
-
-    // Confirm account deletion
+    cy.wait(1000);
     cy.checkAlert(ALERT_MSG.ACCOUNT_DELETED);
 
-    cy.wait(1000);
-
-    // Expect error
+    // make sure account is deleted
     cy.visit('/signin');
     cy.get("input[name='email']").type(ADA_LOVELACE.email);
     cy.get("input[name='password']").type(ADA_LOVELACE.password);
@@ -217,65 +221,84 @@ describe('user authentication', () => {
 
 describe('user settings', () => {
   before(() => {
-    cy.visit('/');
-    cy.acceptCookies();
     cy.createUser(ALAN_TURING);
     cy.saveLocalStorageCache();
+    cy.visit('/users/settings');
   });
 
   beforeEach(() => {
     cy.restoreLocalStorageCache();
-    cy.login(ALAN_TURING.email, ALAN_TURING.password);
-    cy.visit('/users/settings');
   });
 
   afterEach(() => {
     cy.saveLocalStorageCache();
   });
 
-  it('should be able to ask verification email', () => {
-    getLink().contains('Resend Verification Email');
-    cy.checkAlert(ALERT_MSG.MAIL_VERIFICATION);
+  after(() => {
+    cy.deleteAccount();
   });
 
   it('should be able to ask verification email', () => {
-    getLink().contains('Resend Verification Email');
+    cy.contains('a.chakra-link', 'Resend Verification Email', {
+      timeout: 5000,
+    }).click();
     cy.checkAlert(ALERT_MSG.MAIL_VERIFICATION);
+
   });
 
   it('should be able to change the name', () => {
-    getInput('first_name').type('Turing');
-    getInput('last_name').type('Alan');
+    const firstName = getInput('first_name');
+    firstName.clear();
+    firstName.type('Turing');
+
+    const lastName = getInput('last_name').type('Alan');
+    lastName.clear();
+    lastName.type('Alan');
+
+    cy.get('form').first().submit();
+    cy.wait(2500)
     cy.checkAlert(ALERT_MSG.ACCOUNT_UPDATED);
   });
 
   it('should be able to change the about section', () => {
-    getInput('description').type('The CS Father');
+    const description = getInput('description');
+    description.clear();
+    description.type('The CS Father');
+    cy.get('form').first().submit();
+    cy.wait(2500)
     cy.checkAlert(ALERT_MSG.ACCOUNT_UPDATED);
   });
 
   it('should be able to change the website', () => {
-    getInput('website').type('https://turing.io');
+    const website = getInput('website');
+    website.clear();
+    website.type('https://turing.io');
+    cy.get('form').first().submit();
+    cy.wait(2500)
     cy.checkAlert(ALERT_MSG.ACCOUNT_UPDATED);
   });
 
   it('should be able to change the twitter username', () => {
     getInput('twitter').type('alanturing');
+    cy.get('form').first().submit();
+    cy.wait(2500)
     cy.checkAlert(ALERT_MSG.ACCOUNT_UPDATED);
   });
 
   it('should be able to change the password', () => {
-    getButton().contains('Change Password').click();
+    cy.contains('button.chakra-tabs__tab', 'Change Password').click();
     getInput('password').type('notrandom123');
-    getInput('confirm').type('notrandom123');
-    getButton().contains('Save changes').click();
+    getInput('password_confirm').type('notrandom123');
+    cy.contains('form', 'Password').first().submit();
+    cy.wait(2500)
     cy.checkAlert(ALERT_MSG.PASSWORD_CHANGED);
   });
 
   it('should be able to change the email address', () => {
-    getButton().contains('Manage Account').click();
+    cy.contains('button.chakra-tabs__tab', 'Manage Account').click();
     getInput('email').type('god.turing@openmined.org');
-    getButton().contains('Save changes').click();
+    cy.contains('form', 'New Email Address').first().submit();
+    cy.wait(2500)
     cy.checkAlert(ALERT_MSG.EMAIL_UPDATED);
   });
 });

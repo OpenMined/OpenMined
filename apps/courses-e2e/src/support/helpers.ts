@@ -1,15 +1,23 @@
 import sanityClient from '@sanity/client';
 import * as firebase from 'firebase';
 
+console.log(process.env.NODE_ENV);
+
 const firebaseConfig = {
-  apiKey: 'AIzaSyCsgXp-0CkvWsc-iTcO5PmbkU6F-_R8MPY',
-  authDomain: 'openmined-org-dev.firebaseapp.com',
-  databaseURL: 'https://openmined-org-dev.firebaseio.com',
-  projectId: 'openmined-org-dev',
-  storageBucket: 'openmined-org-dev.appspot.com',
-  messagingSenderId: '466298787757',
-  appId: '1:466298787757:web:c9e0cc241b34835d7df324',
-  measurementId: 'G-PQ5T6T7932',
+  apiKey: Cypress.env('NX_FIREBASE_API_KEY'),
+  authDomain: Cypress.env('NX_FIREBASE_AUTH_DOMAIN'),
+  databaseURL: Cypress.env('NX_FIREBASE_DATABASE_URL'),
+  projectId: Cypress.env('NX_FIREBASE_PROJECT_ID'),
+  storageBucket: Cypress.env('NX_FIREBASE_STORAGE_BUCKET'),
+  messagingSenderId: Cypress.env('NX_FIREBASE_MESSAGING_SENDER_ID'),
+  appId: Cypress.env('NX_FIREBASE_APP_ID'),
+  measurementId: Cypress.env('NX_FIREBASE_MEASUREMENT_ID'),
+};
+
+const sanityConfig = {
+  projectId: Cypress.env('NX_SANITY_COURSES_PROJECT_ID'),
+  dataset: Cypress.env('NX_SANITY_COURSES_DATASET'),
+  useCdn: true,
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -23,12 +31,6 @@ export const setCourseData = (data) => {
     .collection('courses')
     .doc(TEST_COURSE.slug)
     .set(data);
-};
-
-const sanityConfig = {
-  projectId: 'rzeg7i8f',
-  dataset: 'production',
-  useCdn: true,
 };
 
 const client = sanityClient(sanityConfig);
@@ -59,7 +61,6 @@ export const getCourseContent = async (course) => {
     }
   }[0]`;
   const result = await client.fetch(query);
-  debugger;
   return result;
 };
 

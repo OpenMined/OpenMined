@@ -53,9 +53,8 @@ Cypress.Commands.add('login', (email, password) => {
 });
 
 Cypress.Commands.add('logout', () => {
-  cy.get('span.chakra-avatar').click();
-  cy.wait(1000);
-  cy.get('button.chakra-menu__menuitem').contains('Logout').click();
+  cy.get('span.chakra-avatar').first().click();
+  cy.contains('p.chakra-text', 'Logout').click();
 });
 
 Cypress.Commands.add('createUser', (user) => {
@@ -68,18 +67,15 @@ Cypress.Commands.add('createUser', (user) => {
   cy.get('form').submit();
 
   const dashboardUrl = '/users/dashboard';
-  cy.url().should('include', dashboardUrl);
+  cy.url({ timeout: 10000 }).should('include', dashboardUrl);
 });
 
 Cypress.Commands.add('deleteAccount', () => {
-  cy.get('span.chakra-avatar').click();
-  cy.wait(1000);
-  cy.get('a.chakra-menu__menuitem').contains('Account Settings').click();
-  cy.wait(1000);
+  cy.get('span.chakra-avatar').first().click();
+  cy.contains('p.chakra-text', 'Account Settings').click();
+
   cy.get('button').contains('Manage Account').click();
   cy.get('button').contains('Delete Account').click();
-  // Confirmation
-  cy.wait(1000);
   cy.get('footer.chakra-modal__footer').within(() => {
     cy.get('button').contains('Delete Account').click();
   });
@@ -135,8 +131,10 @@ Cypress.Commands.add('goToLesson', (course, ref) =>
 );
 
 Cypress.Commands.add('checkAlert', (message) => {
-  cy.get('div.chakra-alert__title').first().should('have.text', message.title);
-  cy.get('div.chakra-alert__desc').first().should('have.text', message.desc);
+  cy.get('div.chakra-alert__title', { timeout: 5000 })
+    .last()
+    .should('have.text', message.title);
+  cy.get('div.chakra-alert__desc', { timeout: 5000 }).last().should('have.text', message.desc);
 });
 
 //
