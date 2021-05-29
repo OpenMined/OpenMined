@@ -82,7 +82,7 @@
     "reactfire": "^2.0.3",
     "sanity-plugin-intl-input": "^5.0.3",
     "sanity-plugin-media": "^0.4.0",
-    "slate": "^0.59.0",
+    "slate": "^0.62.1",
     "slate-history": "^0.59.0",
     "slate-react": "^0.59.0",
     "use-timer": "^2.0.1",
