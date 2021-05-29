@@ -51,7 +51,7 @@
     "@sanity/core": "^2.0.9",
     "@sanity/default-layout": "2.1.3",
     "@sanity/default-login": "^2.0.9",
-    "@sanity/desk-tool": "2.1.3",
+    "@sanity/desk-tool": "2.10.2",
     "@sanity/image-url": "^0.140.19",
     "@sanity/vision": "^2.0.9",
     "@sentry/react": "5.29.2",
