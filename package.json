@@ -46,7 +46,7 @@
     "@react-hook/window-scroll": "^1.3.0",
     "@sanity/base": "2.1.3",
     "@sanity/block-content-to-react": "^2.0.7",
-    "@sanity/client": "^2.0.9",
+    "@sanity/client": "^2.8.0",
     "@sanity/components": "^2.0.9",
     "@sanity/core": "^2.0.9",
     "@sanity/default-layout": "2.1.3",

@@ -3476,7 +3476,7 @@
     make-error "^1.3.0"
     object-assign "^4.1.1"
 
-"@sanity/client@2.1.0", "@sanity/client@^2.0.9":
+"@sanity/client@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@sanity/client/-/client-2.1.0.tgz#89af75234caeda606afaf93b3db7ea45dace0f8c"
   integrity sha512-CrxBa0h8Ov0cW09w35dh8gYOMyMlC6g/rqPQpyUS6Yo08uUOO/6nX8cJh+jug+TBb/V72yD0WpxRNhBWAFXU7w==
@@ -3497,6 +3497,19 @@
     "@sanity/eventsource" "1.150.1"
     "@sanity/generate-help-url" "1.150.1"
     "@sanity/observable" "1.150.1"
+    deep-assign "^2.0.0"
+    get-it "^5.0.3"
+    make-error "^1.3.0"
+    object-assign "^4.1.1"
+
+"@sanity/client@^2.8.0":
+  version "2.10.5"
+  resolved "https://registry.yarnpkg.com/@sanity/client/-/client-2.10.5.tgz#27ba884f63aa597d4e14a172da2e642a3cb86ff0"
+  integrity sha512-O5QncWt4YHLWfNCdyyE6oHOsDYVpI3vjh8dHG3WAtLYRF/YvPhjB6SxZPkHgBXOl5rfimb9qpGbvmzs/yY0KWg==
+  dependencies:
+    "@sanity/eventsource" "2.2.6"
+    "@sanity/generate-help-url" "2.2.6"
+    "@sanity/observable" "2.0.9"
     deep-assign "^2.0.0"
     get-it "^5.0.3"
     make-error "^1.3.0"
@@ -3712,6 +3725,14 @@
     "@rexxars/eventsource-polyfill" "^1.0.0"
     eventsource "^1.0.6"
 
+"@sanity/eventsource@2.2.6":
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/@sanity/eventsource/-/eventsource-2.2.6.tgz#4a2798ac189957e4db20743fe970141df056a56c"
+  integrity sha512-RcrX/+sQwHfvNO3Fpie9rwi4RKTjaxN2BmaoJ9VayrbkL+12Tf1wcqwerPfR+VRA15c7NnLlDFCdu+iKpa7Tng==
+  dependencies:
+    "@rexxars/eventsource-polyfill" "^1.0.0"
+    eventsource "^1.0.6"
+
 "@sanity/export@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@sanity/export/-/export-2.1.0.tgz#86b1ceba8c33fa8cea843b5bb742c803029fcdd3"
@@ -3796,6 +3817,11 @@
   version "2.0.9"
   resolved "https://registry.yarnpkg.com/@sanity/generate-help-url/-/generate-help-url-2.0.9.tgz#ba9268dd6c2571bf4b95a83a13462fdeff2ba883"
   integrity sha512-Ibr4fEL3McAtvScwVPi5IpnLT+fXfY5NMxjmX0IyLHTod1iwOVpVlPBjWdLiiWiaMqX7Kf9CtoNcjFhtsVj2UA==
+
+"@sanity/generate-help-url@2.2.6":
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/@sanity/generate-help-url/-/generate-help-url-2.2.6.tgz#1673872e2747d1e8aa9406486a80ba6d3e36869d"
+  integrity sha512-DXRKXnOCoqObNEEuJJlJ78YOehgoBk92xm1ol4PfPuD4xJv5Z/cMwDecaQ2K05nx8Ecr4KJR/26XMF/FQMg9Tw==
 
 "@sanity/generate-help-url@^0.140.0":
   version "0.140.0"
