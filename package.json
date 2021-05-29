@@ -37,7 +37,7 @@
     "@chakra-ui/react": "1.1.0",
     "@emotion/react": "11.1.4",
     "@emotion/styled": "^11.0.0",
-    "@firebase/rules-unit-testing": "^1.1.6",
+    "@firebase/rules-unit-testing": "^1.2.12",
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-brands-svg-icons": "^5.15.1",
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
