@@ -84,7 +84,7 @@
     "sanity-plugin-media": "^0.4.0",
     "slate": "^0.59.0",
     "slate-history": "^0.59.0",
-    "slate-react": "^0.59.0",
+    "slate-react": "^0.62.1",
     "use-timer": "^2.0.1",
     "yup": "^0.29.3"
   },
