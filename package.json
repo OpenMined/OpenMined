@@ -49,7 +49,7 @@
     "@sanity/client": "^2.0.9",
     "@sanity/components": "^2.0.9",
     "@sanity/core": "^2.0.9",
-    "@sanity/default-layout": "2.1.3",
+    "@sanity/default-layout": "2.10.2",
     "@sanity/default-login": "^2.0.9",
     "@sanity/desk-tool": "2.1.3",
     "@sanity/image-url": "^0.140.19",
